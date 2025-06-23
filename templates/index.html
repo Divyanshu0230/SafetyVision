@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SafetyVision | Hazard Detection</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+  <style>
+    .hero-section {
+      background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
+      url('https://images.unsplash.com/photo-1600267165477-6d4cc741b379?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+      background-size: cover;
+      background-position: center;
+      height: 80vh;
+      color: white;
+    }
+    .modal-content {
+      background: linear-gradient(135deg, #1976d2, #42a5f5);
+      color: white;
+      border-radius: 20px;
+      padding: 20px;
+    }
+    .form-label, .form-control {
+      color: #fff;
+    }
+    .form-control {
+      background: rgba(255,255,255,0.2);
+      border: none;
+    }
+    .form-control::placeholder {
+      color: #eee;
+    }
+    .modal-header {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    .btn-primary {
+      background-color: #e3f2fd;
+      color: #0d47a1;
+      border: none;
+      font-weight: 600;
+    }
+    .btn-primary:hover {
+      background-color: #bbdefb;
+    }
+    .feature-icon {
+      width: 60px;
+      height: 60px;
+    }
+    .alert-card {
+      border-left: 5px solid #dc3545;
+      transition: transform 0.3s;
+    }
+    .alert-card:hover {
+      transform: translateY(-5px);
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container">
+    <a class="navbar-brand" href="#">SafetyVision</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Features</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero-section d-flex align-items-center">
+  <div class="container text-center">
+    <h1 class="display-4 mb-4">AI-Powered Hazard Detection</h1>
+    <p class="lead mb-4">Real-time safety monitoring for industrial environments</p>
+    <button class="btn btn-danger btn-lg me-2" data-bs-toggle="modal" data-bs-target="#demoModal">Request Demo</button>
+    <button class="btn btn-outline-light btn-lg">Learn More</button>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="card h-100 p-3">
+          <img src="https://res.cloudinary.com/deqs9g8ek/image/upload/v1740674095/istockphoto-1411524602-612x612_l5zzzh.jpg" class="feature-icon mb-3" alt="Worker Safety">
+          <h3>Worker Safety</h3>
+          <p>Real-time PPE detection and proximity alerts</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card h-100 p-3">
+          <img src="https://img.icons8.com/color/96/fire-element.png" class="feature-icon mb-3" alt="Fire Hazard">
+          <h3>Fire Detection</h3>
+          <p>Early smoke and flame detection system</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card h-100 p-3">
+          <img src="https://res.cloudinary.com/deqs9g8ek/image/upload/v1740674033/download_szjdlm.png" class="feature-icon mb-3" alt="Chemical Hazard">
+          <h3>Accidents</h3>
+          <p>Near by</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Alerts -->
+<section class="bg-light py-5">
+  <div class="container">
+    <h2 class="text-center mb-4">Live Hazard Alerts</h2>
+    <div class="row g-4" id="alertContainer"></div>
+  </div>
+</section>
+
+<!-- Modal: Safe Route Finder -->
+<div class="modal fade" id="demoModal" tabindex="-1" aria-labelledby="demoModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form method="POST" action="/route">
+        <div class="modal-header">
+          <h5 class="modal-title" id="demoModalLabel">🚀 Safe Route Finder</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">📍 Google Maps Link (optional)</label>
+            <input type="text" name="gmaps_link" class="form-control" placeholder="https://maps.google.com/...">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Start Latitude</label>
+            <input type="number" step="any" class="form-control" name="start_lat" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Start Longitude</label>
+            <input type="number" step="any" class="form-control" name="start_lon" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">End Latitude</label>
+            <input type="number" step="any" class="form-control" name="end_lat" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">End Longitude</label>
+            <input type="number" step="any" class="form-control" name="end_lon" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary w-100"><i class="fas fa-route me-2"></i>Find Safe Route</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-dark text-white py-4">
+  <div class="container text-center">
+    <p>&copy; 2025 SafetyVision. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  const alerts = [
+    { type: 'Fire', location: 'Zone B', time: '2 mins ago', priority: 'High' },
+    { type: 'PPE Violation', location: 'Worksite 3', time: '5 mins ago', priority: 'Medium' },
+    { type: 'Construction', location: 'Storage Area', time: '10 mins ago', priority: 'Critical' }
+  ];
+  function createAlertCards() {
+    const container = document.getElementById('alertContainer');
+    alerts.forEach(alert => {
+      const card = document.createElement('div');
+      card.className = 'col-md-4';
+      card.innerHTML = `
+        <div class="card alert-card h-100">
+          <div class="card-body">
+            <h5 class="text-danger">${alert.type}</h5>
+            <p>Location: ${alert.location}</p>
+            <p>Time: ${alert.time}</p>
+            <span class="badge bg-danger">${alert.priority} Priority</span>
+          </div>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+  }
+  createAlertCards();
+</script>
+</body>
+</html>
